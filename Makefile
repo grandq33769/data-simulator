@@ -19,6 +19,9 @@ pre-commit: dev ## Init development environment with pre-commit
 commit: ## Commitizen commit
 	pipenv run cz commit
 
+commit-retry: ## Commitizen commit retry
+	pipenv run cz commit --retry
+
 freeze: ## Freeze the packages to .txt
 	pipenv lock -r > requirements.txt
 	pipenv lock --dev -r > requirements-dev.txt
