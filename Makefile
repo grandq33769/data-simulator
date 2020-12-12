@@ -22,6 +22,12 @@ commit: ## Commitizen commit
 commit-retry: ## Commitizen commit retry
 	pipenv run cz commit --retry
 
+bump: ## Commitizen bump
+	pipenv run cz bump
+
+changelog: ## Commitizen changelog
+	pipenv run cz changelog
+
 freeze: ## Freeze the packages to .txt
 	pipenv lock -r > requirements.txt
 	pipenv lock --dev -r > requirements-dev.txt
