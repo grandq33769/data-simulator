@@ -7,16 +7,25 @@ from .model import Base, DataModel
 
 
 @dataclass
-class Authorization(Base):
-    token: str = ''
+class _AuthorizationBase(Base):
+    token: str
+
+
+@dataclass
+class _AuthorizationDefaultBase:
     schema: str = 'Bearer'
 
 
 @dataclass
+class Authorization(_AuthorizationDefaultBase, _AuthorizationBase):
+    pass
+
+
+@dataclass
 class Environment(Base):
-    auth: Union[Authorization, None] = None
-    db_url: Union[ParseResult, None] = None
-    endpoint: Union[ParseResult, None] = None
+    auth: Union[Authorization, None]
+    db_url: Union[ParseResult, None]
+    endpoint: Union[ParseResult, None]
 
 
 @dataclass
