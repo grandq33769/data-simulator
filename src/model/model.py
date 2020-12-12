@@ -12,7 +12,6 @@ class Base:
 
 @dataclass
 class _DataModelBase(Base):
-    name: str
     scope: str
     frequency: List[str]
     callback: Callable
