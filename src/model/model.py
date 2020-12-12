@@ -11,20 +11,29 @@ class Base:
 
 
 @dataclass
+class _DataModelBase(Base):
+    name: str
+    scope: str
+    frequency: List[str]
+    callback: Callable
+
+
+@dataclass
+class _DataModelDefaultBase(Base):
+    quantity: int = 1
+
+
+@dataclass
 class Attribute(Base):
-    default: Any
     get: Callable
     args: Dict[str, Any]
 
 
 @dataclass
-class DataModel(Base):
-    __attr__: List[str]
-    name: str
-    scope: str
-    frequency: List[int]
-    callback: Callable
-    quantity: int = 1
-
+class DataModel(_DataModelDefaultBase, _DataModelBase):
     def get_attributes(self):
-        return self.__attr__
+        return [
+            name
+            for name in self.fields()
+            if isinstance(getattr(self, name), Attribute)
+        ]
