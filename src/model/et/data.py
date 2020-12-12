@@ -28,14 +28,14 @@ class _BidSubmitBase(_DataModelBase):
 
 @dataclass
 class DRBidCEMS(DataModel, _DataModelDefaultBase, _DRBidCEMSBase):
-    name = 'dr.bid.cems'
+    pass
 
 
 @dataclass
 class DRBidBEMS(DataModel, _DataModelDefaultBase, _DRBidBEMSBase):
-    name = 'dr.bid.bems'
+    pass
 
 
 @dataclass
 class BidSubmit(DataModel, _DataModelDefaultBase, _BidSubmitBase):
-    name = 'et.bid'
+    pass

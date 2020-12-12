@@ -32,5 +32,4 @@ class ETEnvironment(Environment):
 
 @dataclass
 class ETConfig(Config):
-    module = 'et'
     env: ETEnvironment
