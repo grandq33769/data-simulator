@@ -25,3 +25,6 @@ class DataModel(Base):
     frequency: List[int]
     callback: Callable
     quantity: int = 1
+
+    def get_attributes(self):
+        return self.__attr__
