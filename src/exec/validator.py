@@ -1,21 +1,22 @@
 # Standard Library
-import json
+from typing import List
+
+from ..model.config import Config
 
 
 class Validator:
     """ Object used to validate the config file """
 
-    def __init__(self, path):
-        with open(path, 'rb') as f:
-            self.raw = json.load(f)
+    def __init__(self, configs: List[Config]):
+        self.configs = configs
         self.env = self._validate_env()
-        self.config = self._validate_config()
+        self.models = self._validate_models()
 
     def get(self):
-        return (self.env, self.config)
+        return (self.env, self.models)
 
     def _validate_env(self):
-        return self.raw
+        return self.configs
 
-    def _validate_config(self):
-        return self.raw
+    def _validate_models(self):
+        return self.configs
