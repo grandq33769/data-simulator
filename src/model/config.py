@@ -30,7 +30,6 @@ class Environment(Base):
 
 @dataclass
 class Config(Base):
-    module: str
     env: Environment
     data: List[DataModel]
 
