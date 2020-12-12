@@ -37,5 +37,5 @@ class DRBidBEMS(DataModel, _DataModelDefaultBase, _DRBidBEMSBase):
 
 
 @dataclass
-class BidSubmit(DataModel, _DataModelDefaultBase, _BidSubmitBase):
+class ETBidSubmit(DataModel, _DataModelDefaultBase, _BidSubmitBase):
     pass
