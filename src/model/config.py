@@ -1,9 +1,10 @@
 # Standard Library
 from dataclasses import dataclass
-from typing import Callable, List, Optional
+from typing import List, Optional
 from urllib.parse import ParseResult
 
-from .model import Base, DataModel
+from .base import Base
+from .data import DataModel
 
 
 @dataclass
@@ -43,9 +44,3 @@ class Environment(_EnvironmentDefaultBase, _EnvironmentBase):
 class Config(Base):
     env: Environment
     data: List[DataModel]
-
-
-@dataclass
-class ExecuteType(Base):
-    func: Callable
-    date_format: str
