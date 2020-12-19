@@ -1,28 +1,41 @@
 # Standard Library
-from datetime import datetime
+from threading import Thread
+from typing import List
 
 # Third Party Library
-import schedule
 from loguru import logger as log
 
-# Local Module
-from src.model.config import ExecuteType
-
-SCHEDULE = schedule
-
-MAPPING = {
-    'minute': ExecuteType(SCHEDULE.every().minute, ':%S'),
-    'hour': ExecuteType(SCHEDULE.every().hour, ':%M'),
-    'day': ExecuteType(SCHEDULE.every().day, '%H:%M'),
-}
+from ..model.base import Base
+from ..model.config import Config
+from .simulator import SimulationHandler
 
 
-def every(scope: str, dt: datetime):
-    try:
-        exec_type = MAPPING[scope]
-        date_str = dt.strftime(exec_type.date_format)
-        return exec_type.func.at(date_str)
-    except KeyError:
-        log.exception(f'Can not get key "{scope}"')
-    except Exception:
-        log.exception('', diagnose=True)
+def create_simulation(handler: SimulationHandler) -> None:
+    for job, freq in zip(handler.model.jobs, handler.model.frequency):
+        job().do(lambda: Thread(target=handler.execute).start())
+        log.debug(
+            f'[{handler.model.classname}] ',
+            f'frequency "{freq}" in ',
+            f'"{handler.model.scope}" scope initial success',
+        )
+
+    log.info(
+        f'[{handler.model.classname}] ',
+        f'Scheduler initial success with {handler.model}',
+    )
+
+
+class ModuleHandler(Base):
+    """A Handler for scheduling a list of data simulation in a module"""
+
+    def __init__(self, module: Config):
+        self.env = module.env
+        self.simulation: List[SimulationHandler] = [
+            SimulationHandler(data_model, self.env)
+            for data_model in module.data
+        ]
+        log.info(f'[{module.classname}] Module initialization success.')
+        log.debug(f'[{module.classname}] Details: {module}')
+
+        for handler in self.simulation:
+            create_simulation(handler)
