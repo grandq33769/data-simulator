@@ -16,11 +16,11 @@ ENV = ETEnvironment(
 DATA: List[DataModel] = [
     DRBidCEMS(
         scope='hour',
-        frequency=['00:00'],
-        callback=lambda *args: print('hello'),
-        uuid=Attribute(get=lambda *args: ['a'], kwargs={}),
-        start_time=Attribute(get=lambda *args: '2020-01-01 11', kwargs={}),
-        end_time=Attribute(get=lambda *args: '2020-01-01 12', kwargs={}),
+        frequency=['00:35'],
+        callback=lambda *args: print(args[0]),
+        uuid=Attribute(get=lambda **kwargs: [kwargs.get('time')], kwargs={}),
+        start_time=Attribute(get=lambda **kwargs: '2020-01-01 11', kwargs={}),
+        end_time=Attribute(get=lambda **kwargs: '2020-01-01 12', kwargs={}),
         quantity=3,
     ),
     ETBidSubmit(
