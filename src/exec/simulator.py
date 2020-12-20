@@ -12,15 +12,16 @@ class SimulationHandler(Base):
         self.env = env
 
     def execute(self):
-        for _ in range(self.model.quantity):
-            simulated_data = self.simulate()
+        for time in range(self.model.quantity):
+            simulated_data = self.simulate(time)
             self.model.callback(simulated_data, self.model, self.env)
 
-    def simulate(self) -> dict:
+    def simulate(self, time: int) -> dict:
         result = dict()
         for attribute_name in self.model.get_attributes():
             try:
                 attribute = getattr(self.model, attribute_name)
+                attribute.kwargs.update({'time': time})
                 result.update(
                     {attribute_name: attribute.get(**attribute.kwargs)}
                 )
