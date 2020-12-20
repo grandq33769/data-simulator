@@ -14,14 +14,14 @@ def create_simulation(handler: SimulationHandler) -> None:
     for job, freq in zip(handler.model.jobs, handler.model.frequency):
         job().do(lambda: Thread(target=handler.execute).start())
         log.debug(
-            f'[{handler.model.classname}] ',
-            f'frequency "{freq}" in ',
-            f'"{handler.model.scope}" scope initial success',
+            f'[{handler.model.classname}] '
+            f'frequency "{freq}" in '
+            f'"{handler.model.scope}" scope initial success'
         )
 
     log.info(
-        f'[{handler.model.classname}] ',
-        f'Scheduler initial success with {handler.model}',
+        f'[{handler.model.classname}] '
+        f'Scheduler initial success with {handler.model}'
     )
 
 
