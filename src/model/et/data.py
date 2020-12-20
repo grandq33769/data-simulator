@@ -1,7 +1,7 @@
 # Standard Library
 from dataclasses import dataclass
 
-from ..model import Attribute, DataModel, _DataModelBase, _DataModelDefaultBase
+from ..data import Attribute, DataModel, _DataModelBase, _DataModelDefaultBase
 
 
 @dataclass
