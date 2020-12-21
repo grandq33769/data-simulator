@@ -25,6 +25,7 @@ class ETEnvironment(Environment):
         ]
         if not all(conditions):
             raise TypeError('auth and endpoint must be specified')
+        super().__post_init__()
 
 
 @dataclass
