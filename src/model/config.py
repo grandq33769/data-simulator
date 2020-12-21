@@ -4,12 +4,13 @@ from typing import List, Optional
 from urllib.parse import ParseResult
 
 from .base import Base
-from .data import DataModel
+from .data import Callback, DataModel
 
 
 @dataclass
 class _AuthorizationBase(Base):
-    pass
+    path: str
+    callback: Callback
 
 
 @dataclass
@@ -20,7 +21,8 @@ class _AuthorizationDefaultBase:
 
 @dataclass
 class Authorization(_AuthorizationDefaultBase, _AuthorizationBase):
-    pass
+    def get(self) -> dict:
+        return {'token': self.token}
 
 
 @dataclass
