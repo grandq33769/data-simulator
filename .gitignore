@@ -142,3 +142,10 @@ cython_debug/
 media
 static
 report
+
+# Repo related
+/src/tests/test_scheduler.py
+/src/configs/**
+
+!/src/configs/**/sample.py
+!/src/configs/__init__.py

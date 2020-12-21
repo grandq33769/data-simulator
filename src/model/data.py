@@ -15,10 +15,16 @@ def parse_dt(datetime_str: str, str_format: str) -> str:
 
 
 @dataclass
+class Callback(Base):
+    func: Callable
+    kwargs: Dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
 class _DataModelBase(Base):
     scope: str
     frequency: List[str]
-    callback: Callable
+    callback: Callback
 
 
 @dataclass
@@ -30,7 +36,7 @@ class _DataModelDefaultBase(Base):
 @dataclass
 class Attribute(Base):
     get: Callable
-    kwargs: Dict[str, Any]
+    kwargs: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass

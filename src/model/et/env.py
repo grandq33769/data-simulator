@@ -12,7 +12,8 @@ class _ETAuthorizationBase(_AuthorizationBase):
 
 @dataclass
 class ETAuthorization(Authorization, _ETAuthorizationBase):
-    pass
+    def get(self) -> dict:
+        return {'account': self.account, 'password': self.password}
 
 
 @dataclass
@@ -24,6 +25,7 @@ class ETEnvironment(Environment):
         ]
         if not all(conditions):
             raise TypeError('auth and endpoint must be specified')
+        super().__post_init__()
 
 
 @dataclass
