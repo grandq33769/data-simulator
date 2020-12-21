@@ -1,6 +1,6 @@
 # Standard Library
 import os
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Any, Callable, Dict, Optional, Sequence, Tuple, Union
 from urllib.parse import urljoin
 
 # Third Party Library
@@ -10,7 +10,7 @@ from loguru import logger as log
 from ...model.config import Authorization, Environment
 
 
-def http_request(**kwargs) -> dict:
+def http_request(**kwargs) -> Union[dict, Sequence[Dict]]:
     data: Optional[dict] = kwargs.get('data')
     env: Optional[Environment] = kwargs.get('env')
     method: Optional[str] = kwargs.get('method')
