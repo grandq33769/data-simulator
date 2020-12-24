@@ -19,7 +19,7 @@ AUTH = ETAuthorization(
 
 ENV = ETEnvironment(
     auth=AUTH,
-    endpoint=ENDPOINT,
+    endpoint=ENDPOINT,  # type: ignore
 )
 
 DATA: List[DataModel] = [
