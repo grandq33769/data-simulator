@@ -1,0 +1,13 @@
+---
+version: '3'
+
+services:
+
+  data-simulator:
+    build: .
+    image: data-simulator:latest
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./src/configs:/src/configs
