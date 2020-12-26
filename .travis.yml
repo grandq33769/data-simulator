@@ -5,6 +5,13 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install -r requirements-dev.txt
-# command to run tests
-script:
-  - make ci-bundle
+jobs:
+  include:
+    # command to run tests
+    - stage: "Code Quality Assurance"
+      script: make ci-bundle
+    - state: "Tags Version"
+      script: 
+        - make bump
+        - git push origin --tags
+        
