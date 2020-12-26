@@ -1,4 +1,4 @@
-PKG_LIST := streaming
+PKG_LIST := src
 .DEFAULT_GOAL := help
 
 .PHONY: init flake8 pylint lint test clean dev commit run simple-clean pre-commit-clean prod dev pre-commit help
