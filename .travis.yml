@@ -1,6 +1,9 @@
 language: python
 python:
 - '3.7'
+install:
+- pip install -r requirements.txt
+- pip install -r requirements-dev.txt
 services:
 - docker
 jobs:
@@ -8,8 +11,6 @@ jobs:
   - stage: Code Quality Assurance
     name: "Code Quality Assurance"
     script: 
-    - pip install -r requirements.txt
-    - pip install -r requirements-dev.txt
     - make ci-bundle
   - stage: Tags Version
     name: "Tags Version"
