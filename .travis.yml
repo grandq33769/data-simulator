@@ -7,8 +7,10 @@ install:
 jobs:
   include:
   - stage: Code Quality Assurance
+    name: "Code Quality Assurance"
     script: make ci-bundle
   - state: Tags Version
+    name: "Tags Version"
     script:
     - make bump
     - git remote set-url origin https://grandq33769:$GH_TOKEN@github.com/grandq33769/data-simulator.git
