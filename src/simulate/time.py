@@ -24,10 +24,14 @@ def get_hour_by_freq(
 
 # pylint: disable=unused-argument
 def get_hour_by_range(
-    start: int = 0, end: int = 0, dt_format: str = FORMAT, **kwargs
+    start: int = 0,
+    end: int = 0,
+    day_offset: int = 0,
+    dt_format: str = FORMAT,
+    **kwargs
 ) -> str:
     hour = randrange(start, end + 1)
-    today = datetime.now()
+    today = datetime.now() + timedelta(days=day_offset)
     today = today.replace(hour=hour, minute=0, second=0, microsecond=0)
     return today.strftime(dt_format)
 
@@ -36,10 +40,10 @@ def get_hour_by_range(
 
 
 def get_end_depend_start(
-    offset: int = 1, dt_format: str = FORMAT, **kwargs
+    hour_offset: int = 1, dt_format: str = FORMAT, **kwargs
 ) -> str:
     today_str: str = datetime.now().isoformat()
     today_str = kwargs.get('start_time', today_str)
     today: datetime = parser.parse(today_str)
-    today = today + timedelta(hours=offset)
+    today = today + timedelta(hours=hour_offset)
     return today.strftime(dt_format)
