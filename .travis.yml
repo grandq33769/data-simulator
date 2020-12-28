@@ -1,0 +1,37 @@
+language: python
+python:
+- '3.7'
+install:
+- pip install -r requirements.txt
+- pip install -r requirements-dev.txt
+services:
+- docker
+env:
+  global:
+    secure: f6MOKM8OeLmqobfd99D/2ytdLyv8StxgCfUbp1HghiQp0Z4fYl/ZjZt1XU7vSoTe90vaeiT122EPS16x+8omE+uUjnRrKmZLAIyM4lPmAyu/3aQm+2Zmg/K6QY+LRSx1rFLkU1mZJ7CZ77yC/DdUCJnxeFJ+3lkP58A51N94aSYlulyFRWy9u5w41Pc87JZ7irCtFfT/sUOukalUsSNISbE+Q0YOIPCC4ebXf5P3DZ4LJeWs1iT/h+xUUSzjfStfZn+hozkpNK5HA72u4Mpn2Douf65Zmo7A6t4cpVVpJstkR3ybVJbMUYS31i3eXBuR70CjiZjtrhtblr7ZBQ9s9KDP9POLFX7mUFTgveoMgEf5OMr6Qq1jVLRS+9Gd0P5zYg5Go15kns0eTJkLwQiZZeyExt7EimOl5udd+2YURumvq8b1f4NU4uUT9caQUlY2fF5lWb+zvNfAsfcQibYXGMQ2yCKPbJ/k53sNGjQEtHpIQiiXPNeH2LYunODrU/o1sJkgtA/LERJ0xOAbB+aPrFz2TAX1UKwdvLPOI9rhrTwSXgFk+Yi2Ugwud97THrUvkfgQGZBAXzVGKao3XRF9Hz3M3/wt9RjuzoESFZuQiDgO1FbzXSrirwMpXhOGkr9147ehVZ76DMm5f8YoNZ7zrCiWTqOhdeL+w6CUGMlGZNw=
+jobs:
+  include:
+  - stage: Code Quality Assurance
+    name: Code Quality Assurance
+    script:
+    - make ci-bundle
+  - stage: Tags Version
+    name: Tags Version
+    script:
+    - make bump
+    - git remote set-url origin https://grandq33769:$GH_TOKEN@github.com/grandq33769/data-simulator.git
+    - git push --follow-tags origin HEAD:$TRAVIS_BRANCH
+  - stage: Build Docker Image
+    name: Build Docker Image
+    script:
+    - make docker-build name=$TRAVIS_REPO_SLUG
+    - docker login -u="$DOCKER_AC" -p="$DOCKER_PW"
+    - make docker-deploy name=$TRAVIS_REPO_SLUG tag=latest
+notifications:
+  slack:
+    rooms:
+      secure: OcvzpjSzHRgp7N9PZiOKJxgTI6/LTWBDYh2m7lH3nopFwpYyQFY6YQF4VA9Q8NHrbj4fov3t45wl5pe6MWVa9jdk6uAIMsON0THAlF8ZAuOb8rBdKi5RMytciN3Cz/3VsNbgk8KUVNspsFh6CiMI1K1XNvoIOpsKAJ54nHn0hlYiZGQV/TB80MNfJr4Bn1U4btfLpsp1/hrHPJk/seVmnY8tR1ZZncjbGFvGY2k9wQGjUcgmCQU5AMTEOVgmSZ4tzW+ugvU51GACdoYDj9t6hvsebibv2UIfkeH+C7/PrqzzWb55MoD/VjTZBMvGewJI6vx6qqL+i8AA9BT2gRspI7X8/QwDOB3lLubLWaw+N4550vZAHejc63h8zuAdDrwuUA6Sh0d21SdsMZuyO43LKCN/8AexkLEyhL1N2UFbPWjOzIQjKu2LP+u0N1WW0ZjjbyVSNDhOnq+txhAf77/tt3uTJ5IGGxT3M3QcfRUy7dCEvBHAfHb3Qw+4qhzeMJ09xjoZLr4zem1DsovX0nJwCAxEwJ5/oEk9ANAn7+W5FcpVM0mXZpDnQ1Ubop2/9zxOJFFdbO9eoZdHuddRCSTVx64ci339dt7VSFY3ndpi+djlsjynn+ACs7ZqF9HneoUKCsgUdayJQTzjE3bA5XuF9PXP5K9JTtlZJoQO1bjpsyw=
+    template:
+      - "Repo `%{repository_slug}` *%{result}* build (<%{build_url}|#%{build_number}>) for commit (<%{compare_url}|%{commit}>) on branch `%{branch}`."
+      - "Execution time: *%{duration}*"
+      - "Message: %{message}"

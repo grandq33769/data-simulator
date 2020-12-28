@@ -1,4 +1,5 @@
-PKG_LIST := streaming
+PKG_LIST := src
+name ?= $(shell echo `git remote show -n origin | grep Fetch | cut -d/ -f4- | cut -d. -f1`)
 .DEFAULT_GOAL := help
 
 .PHONY: init flake8 pylint lint test clean dev commit run simple-clean pre-commit-clean prod dev pre-commit help
@@ -23,7 +24,7 @@ commit-retry: ## Commitizen commit retry
 	pipenv run cz commit --retry
 
 bump: ## Commitizen bump
-	pipenv run cz bump
+	pipenv run cz bump --yes
 
 changelog: ## Commitizen changelog
 	pipenv run cz changelog
@@ -58,6 +59,13 @@ test: ## Pytest
 	done
 
 ci-bundle: reformat lint test ## CI bundle tasks
+
+docker-build: ## Docker Image build
+	docker build -t $(name) .
+
+docker-deploy: ## Docker Image deploy
+	docker $(name):$(tag)
+	docker push $(name):$(tag)
 
 simple-clean: ## Clean cache
 	find . -type f -name '*.py[co]' -delete

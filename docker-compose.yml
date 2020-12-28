@@ -5,7 +5,7 @@ services:
 
   data-simulator:
     build: .
-    image: data-simulator:latest
+    image: grandq33769/data-simulator:latest
     restart: always
     env_file:
       - .env
