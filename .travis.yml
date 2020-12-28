@@ -20,7 +20,7 @@ jobs:
     script:
     - make bump
     - git remote set-url origin https://grandq33769:$GH_TOKEN@github.com/grandq33769/data-simulator.git
-    - git push origin --tags
+    - git push origin --tags -f
   - stage: Build Docker Image
     name: Build Docker Image
     script:
