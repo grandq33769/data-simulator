@@ -24,7 +24,7 @@ commit-retry: ## Commitizen commit retry
 	pipenv run cz commit --retry
 
 bump: ## Commitizen bump
-	pipenv run cz bump
+	pipenv run cz bump --yes
 
 changelog: ## Commitizen changelog
 	pipenv run cz changelog
